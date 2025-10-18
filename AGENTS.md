@@ -102,7 +102,7 @@ yuna/
 2. **Monorepo**: Uses pnpm workspaces for managing multiple packages
 3. **Existing Lint Issues**: There may be existing lint errors in the codebase; focus on not introducing new ones
 4. **Database**: Prisma is used for database management; schema files are in the prisma/ directory
-5. **Docker Support**: Web app includes Dockerfile for containerized deployment
+5. **Containerization**: Web app includes Dockerfile for containerized deployment
 
 ## Testing
 Currently, there is no dedicated test infrastructure visible in the repository. When adding tests, ensure they are consistent with future testing patterns.
