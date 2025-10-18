@@ -9,7 +9,6 @@
   "scripts": {
     "build": "echo \"nothing to build at root\"",
     "lint": "eslint --config eslint.config.mjs \"apps/**/src/**/*.{ts,tsx,js,jsx}\" \"apps/**/app/**/*.{ts,tsx,js,jsx}\" --cache",
-    "format": "prettier --write .",
     "typecheck": "tsc --noEmit"
   },
   "engines": {
@@ -23,7 +22,6 @@
     "eslint": "9.38.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "5.5.4",
-    "prettier": "3.6.2",
     "typescript": "5.9.3",
     "typescript-eslint": "8.46.1"
   }
