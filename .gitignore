@@ -1,0 +1,33 @@
+# Node
+node_modules/
+# Keep lockfiles committed for reproducible builds
+#! pnpm uses pnpm-lock.yaml at root; leave it tracked
+
+# Build outputs
+dist/
+build/
+.next/
+.turbo/
+.cache/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# React Router
+/.react-router/
