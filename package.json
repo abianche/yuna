@@ -16,6 +16,7 @@
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
     "prisma:format": "prisma format",
+    "prisma:validate": "prisma validate",
     "prisma:reset": "prisma migrate reset --force",
     "docker:up": "docker compose up -d",
     "docker:build": "docker compose up -d --build",
