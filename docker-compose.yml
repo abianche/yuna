@@ -1,36 +1,40 @@
-version: "3.9"
-
 services:
   db:
-    image: postgres:16
+    image: postgres:18-alpine
     container_name: yuna-db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: yuna
-      POSTGRES_PASSWORD: yuna
-      POSTGRES_DB: yuna
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5432:5432"
+      - ${POSTGRES_PORT}:5432
+    networks:
+      - yuna
     volumes:
       - db_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U yuna"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 30s
 
   redis:
-    image: redis:7
+    image: redis:8-alpine
     container_name: yuna-redis
     restart: unless-stopped
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    networks:
+      - yuna
     command: ["redis-server", "--save", "", "--appendonly", "no"]
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 10s
 
   api:
     build:
@@ -43,13 +47,35 @@ services:
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - API_PORT=${API_PORT}
+      - NODE_ENV=${NODE_ENV}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - UPDATE_CHECK_INTERVAL=${UPDATE_CHECK_INTERVAL}
+      - HEALTHCHECK_PATH=${HEALTHCHECK_PATH}
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
     ports:
-      - "8080:8080"
+      - "${API_PORT}:${API_PORT}"
+    networks:
+      - yuna
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -qO- http://localhost:${API_PORT}${HEALTHCHECK_PATH} || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
 volumes:
   db_data:
+
+networks:
+  yuna:
+    driver: bridge
