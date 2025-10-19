@@ -47,6 +47,7 @@ yuna/
 │       │   ├── lib/
 │       │   └── constants/
 │       └── public/
+├── docs/             # Documentation files (Docusaurus)
 └── [config files]    # Root configuration files
 ```
 

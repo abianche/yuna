@@ -1,0 +1,13 @@
+# Dependencies and build outputs
+node_modules/
+dist/
+build/
+coverage/
+target/
+
+# Misc
+.git/
+.idea/
+.vscode/
+pnpm-lock.yaml
+
