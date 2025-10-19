@@ -22,7 +22,8 @@ CREATE TABLE
         "owner_id" UUID NOT NULL,
         "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
         "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        CONSTRAINT "projects_pkey" PRIMARY KEY ("id") CONSTRAINT "projects_name_not_blank" CHECK (btrim (name) <> '')
+        CONSTRAINT "projects_pkey" PRIMARY KEY ("id"),
+        CONSTRAINT "projects_name_not_blank" CHECK (btrim (name) <> '')
     );
 
 CREATE TABLE
@@ -35,7 +36,8 @@ CREATE TABLE
         "custom" JSONB NOT NULL DEFAULT '{}',
         "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
         "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        CONSTRAINT "issues_pkey" PRIMARY KEY ("id") CONSTRAINT "issues_title_not_blank" CHECK (btrim (title) <> '')
+        CONSTRAINT "issues_pkey" PRIMARY KEY ("id"),
+        CONSTRAINT "issues_title_not_blank" CHECK (btrim (title) <> '')
     );
 
 CREATE TABLE

@@ -6,6 +6,6 @@ export default defineConfig({
   schema: path.join('apps', 'api', 'prisma', 'schema.prisma'),
   migrations: {
     path: path.join('apps', 'api', 'prisma', 'migrations'),
-    seed: 'tsx --transpile-only apps/api/prisma/seed.ts',
+    seed: 'ts-node --transpile-only apps/api/prisma/seed.ts',
   },
 });
