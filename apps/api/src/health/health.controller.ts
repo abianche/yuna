@@ -20,7 +20,11 @@ export class HealthController {
 
   @Get('/readyz')
   readyz() {
-    // TODO: Add actual readiness checks (database connectivity, external services, etc.)
+    // TODO: Implement actual readiness checks:
+    // - Verify PostgreSQL database connectivity
+    // - Verify Redis connectivity
+    // - Check any external service dependencies
+    // Return 503 Service Unavailable if any check fails
     return {
       status: 'ready',
       timestamp: new Date().toISOString(),
