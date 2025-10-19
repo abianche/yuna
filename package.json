@@ -10,7 +10,15 @@
   "scripts": {
     "build": "echo \"nothing to build at root\"",
     "lint": "eslint --config eslint.config.mjs \"apps/**/src/**/*.{ts,tsx,js,jsx}\" \"apps/**/app/**/*.{ts,tsx,js,jsx}\" --cache",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "docker:up": "docker compose up -d",
+    "docker:build": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:ps": "docker compose ps",
+    "docker:logs": "docker compose logs --no-color --tail=200",
+    "docker:logs:api": "docker compose logs --no-color --tail=200 api",
+    "docker:restart": "docker compose restart",
+    "docker:nuke": "docker compose down -v --remove-orphans"
   },
   "engines": {
     "node": ">=22"
