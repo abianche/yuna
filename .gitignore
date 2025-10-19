@@ -35,4 +35,5 @@ pnpm-debug.log*
 # Caches
 .eslintcache
 
-/generated/prisma
+# Prisma
+/apps/api/src/generated/
