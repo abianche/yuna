@@ -31,3 +31,6 @@ pnpm-debug.log*
 
 # React Router
 /.react-router/
+
+# Caches
+.eslintcache
