@@ -34,3 +34,5 @@ pnpm-debug.log*
 
 # Caches
 .eslintcache
+
+/generated/prisma
