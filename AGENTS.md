@@ -38,7 +38,8 @@ Yuna is a self-hosted work management platform built with React and PostgreSQL, 
 yuna/
 ├── apps/
 │   ├── api/          # Backend API (TypeScript)
-│   │   └── src/
+│   │   ├── src/
+│   │   └── prisma/   # Database schema and migrations
 │   └── web/          # Frontend React app
 │       ├── app/      # React Router app directory
 │       │   ├── components/
@@ -46,7 +47,6 @@ yuna/
 │       │   ├── lib/
 │       │   └── constants/
 │       └── public/
-├── prisma/           # Database schema and migrations
 └── [config files]    # Root configuration files
 ```
 
