@@ -20,6 +20,7 @@ export class HealthController {
 
   @Get('/readyz')
   readyz() {
+    // TODO: Add actual readiness checks (database connectivity, external services, etc.)
     return {
       status: 'ready',
       timestamp: new Date().toISOString(),
