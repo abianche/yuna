@@ -32,7 +32,8 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          #TODO: automate this version resolution against the `packageManager` in root package.json
+          version: 10.18.3
           run_install: true
 
       - name: Verify versions
