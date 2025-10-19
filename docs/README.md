@@ -1,4 +1,6 @@
-# Yuna Website
+[![Docs](https://github.com/abianche/yuna/actions/workflows/docs.yml/badge.svg)](https://github.com/abianche/yuna/actions/workflows/docs.yml)
+
+# Yuna Docs
 
 Simple Docusaurus site for the Yuna project.
 
