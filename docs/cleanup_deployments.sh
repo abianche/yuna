@@ -28,7 +28,7 @@ for ID in $DEPLOYMENTS; do
     FIRST=false
   else
     echo "Deleting deployment $ID"
-    if [ "$DRY_RUN" != true ]; then
+    if [[ $DRY_RUN != true ]]; then
       gh api -X DELETE repos/$OWNER/$REPO/deployments/$ID >/dev/null
     fi
   fi
