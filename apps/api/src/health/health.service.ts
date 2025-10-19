@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 
 @Injectable()
 export class HealthService {
+  private readonly logger = new Logger(HealthService.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   async checkHealth() {
@@ -14,7 +16,8 @@ export class HealthService {
       // Check database connection
       await this.prisma.$queryRaw`SELECT 1`;
       return { status: 'ready', database: 'connected' };
-    } catch {
+    } catch (error) {
+      this.logger.error('Database connection check failed', error);
       throw new Error('Database connection failed');
     }
   }
