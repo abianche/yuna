@@ -12,10 +12,11 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@prisma/extension-accelerate": "2.0.2",
-    "@prisma/client": "6.17.1"
+    "@prisma/client": "6.17.1",
+    "@prisma/extension-accelerate": "2.0.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "10.1.0",
     "prisma": "6.17.1"
   }
 }
