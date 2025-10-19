@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -32,7 +31,9 @@ model Project {
 
   owner  User    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   issues Issue[]
+  // @@unique([ownerId, name]) // enable if needed
 
+  @@index([ownerId, updatedAt])
   @@map("projects")
 }
 
@@ -49,8 +50,11 @@ model Issue {
   project  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
   author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   comments Comment[]
+  // @@unique([projectId, title]) // enable if needed
 
   @@index([custom], type: Gin)
+  @@index([projectId, updatedAt])
+  @@index([authorId, createdAt])
   @@index([projectId, id])
   @@map("issues")
 }
@@ -66,5 +70,7 @@ model Comment {
   issue  Issue @relation(fields: [issueId], references: [id], onDelete: Cascade)
   author User  @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
+  @@index([issueId, createdAt])
+  @@index([authorId])
   @@map("comments")
 }
