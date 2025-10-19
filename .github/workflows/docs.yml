@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build website
+    name: Build docs
     permissions:
       contents: read
     runs-on: ubuntu-latest
