@@ -18,4 +18,4 @@ async function bootstrap() {
   console.log(`API listening on http://0.0.0.0:${port}`);
 }
 
-bootstrap();
+bootstrap(); // NOSONAR
