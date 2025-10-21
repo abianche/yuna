@@ -1,36 +1,31 @@
-# syntax=docker/dockerfile:1.6
-
 FROM node:24-alpine AS base
-ENV PNPM_HOME=/pnpm
-ENV PATH=$PNPM_HOME:$PATH
-RUN corepack enable && corepack prepare pnpm@10.18.3 --activate
+RUN npm i -g pnpm@10.18.3
 
 WORKDIR /app
 
 # Install workspace dependencies (only what's needed)
 FROM base AS deps
-COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+COPY .npmrc pnpm-workspace.yaml package.json pnpm-lock.yaml prisma.config.ts ./
 COPY apps/api/package.json apps/api/package.json
-COPY prisma/package.json prisma/package.json
-COPY apps/web/package.json apps/web/package.json
+COPY apps/api/prisma ./apps/api/prisma
 RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile --filter @yuna/api... --ignore-scripts
+    pnpm install --frozen-lockfile --filter @yuna/api...
 
 # Build the API
 FROM deps AS build
 COPY tsconfig.json ./tsconfig.json
 COPY apps/api/ ./apps/api/
+RUN pnpm prisma:generate
 RUN pnpm -C apps/api build
 
 # Runtime image
 FROM base AS runner
-WORKDIR /app
 ENV NODE_ENV=production
 ENV API_PORT=8080
 
-# Only copy the built artifacts and node_modules for the api
+# Copy both root and package node_modules so the generated Prisma Client is present
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/apps/api/dist ./apps/api/dist
 
 EXPOSE 8080
-CMD ["node", "apps/api/dist/index.js"]
+CMD ["node", "apps/api/dist/main.js"]
