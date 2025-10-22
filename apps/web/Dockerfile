@@ -1,22 +1,26 @@
-FROM node:20-alpine AS development-dependencies-env
-COPY . /app
+FROM node:24-alpine AS base
+RUN npm i -g pnpm@10.18.3
 WORKDIR /app
-RUN npm ci
 
-FROM node:20-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
+# Install only the web workspace deps
+FROM base AS deps
+COPY .npmrc pnpm-workspace.yaml package.json pnpm-lock.yaml prisma.config.ts ./
+COPY apps/web/package.json apps/web/package.json
+RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile --filter @yuna/web...
 
-FROM node:20-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-WORKDIR /app
-RUN npm run build
+# Build the web app
+FROM deps AS build
+COPY tsconfig.json ./tsconfig.json
+COPY apps/web ./apps/web
+RUN pnpm -C apps/web build
 
-FROM node:20-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
-WORKDIR /app
-CMD ["npm", "run", "start"]
+# Runtime image
+FROM base AS runner
+ENV NODE_ENV=production
+ENV PORT=3000
+# Use hoisted node_modules produced by pnpm
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=build /app/apps/web/build ./apps/web/build
+EXPOSE 3000
+CMD ["node", "apps/web/build/server/index.js"]

@@ -45,29 +45,54 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=${DATABASE_URL_DOCKER}
-      - API_PORT=${API_PORT}
-      - NODE_ENV=${NODE_ENV}
-      - LOG_LEVEL=${LOG_LEVEL}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - UPDATE_CHECK_INTERVAL=${UPDATE_CHECK_INTERVAL}
-      - HEALTHCHECK_PATH=${HEALTHCHECK_PATH}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+      - API_PORT=8080
+      - NODE_ENV=production
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - REDIS_HOST=${REDIS_HOST:-redis}
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - UPDATE_CHECK_INTERVAL=${UPDATE_CHECK_INTERVAL:-60000}
+      - HEALTHCHECK_PATH=${HEALTHCHECK_PATH:-/health}
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
     ports:
-      - "${API_PORT}:8080"
+      - "8080:8080"
     networks:
       - yuna
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "wget -qO- http://localhost:8080${HEALTHCHECK_PATH} || exit 1",
+          "wget -qO- http://yuna:${API_PORT:-8080}${HEALTHCHECK_PATH} || exit 1",
         ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: yuna-web
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - API_URL=http://api:8080
+      - VITE_API_URL=http://api:8080
+    depends_on:
+      api:
+        condition: service_started
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    networks:
+      - yuna
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/ || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
