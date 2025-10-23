@@ -8,7 +8,10 @@ export class JwtAuthGuard extends AuthGuard('jwt') implements CanActivate {
     return super.canActivate(context);
   }
 
-  handleRequest(err: any, user: any, info: any) {
+  handleRequest<TUser = { id: string; email: string; name: string }>(
+    err: Error | null,
+    user: TUser | false,
+  ) {
     if (err || !user) {
       throw err || new UnauthorizedException();
     }

@@ -1,11 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Response, Request } from 'express';
+import type { Response, Request } from 'express';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
 describe('AuthController', () => {
   let controller: AuthController;
-  let authService: AuthService;
 
   const mockAuthService = {
     signup: jest.fn(),
@@ -24,7 +23,6 @@ describe('AuthController', () => {
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
-    authService = module.get<AuthService>(AuthService);
 
     jest.clearAllMocks();
   });
@@ -123,7 +121,7 @@ describe('AuthController', () => {
 
       const mockRequest = {
         user,
-      } as Request & { user: any };
+      } as Request & { user: { id: string; email: string; name: string } };
 
       const response = controller.me(mockRequest);
 
