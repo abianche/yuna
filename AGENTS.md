@@ -10,34 +10,36 @@ Yuna is a self-hosted work management platform built with React and PostgreSQL, 
 
 ### Frontend (Web App)
 - **Framework**: React 19 with React Router 7
-- **Language**: TypeScript 5
-- **Styling**: Tailwind CSS 4
-- **UI Components**: Radix UI (dropdown-menu, slot)
-- **Build Tool**: Vite 7
+- **Language**: TypeScript 5.9
+- **Styling**: Tailwind CSS 4 with tailwind-merge and tw-animate-css
+- **UI Components**: Shadcn and Radix UI
+- **Build Tooling**: Vite 7
 - **Theme Management**: next-themes for dark/light mode support
 - **Icons**: lucide-react
 
 ### Backend (API)
-- **Language**: TypeScript 5
-- **Module System**: ES Modules
+- **Framework**: NestJS 11 on Express
+- **Language**: TypeScript 5.9
 - **Runtime**: Node.js (>= 22)
+- **ORM**: Prisma 6 with Accelerate extension
+- **Testing**: Jest 30 with Supertest 7
 
 ### Database
-- **ORM**: Prisma (managed in workspace)
 - **Database**: PostgreSQL
+- **Schema & Migrations**: Prisma Migrate (workspace-managed)
 
 ### Development Tools
-- **Package Manager**: pnpm 10
-- **Linting**: ESLint 9 with TypeScript ESLint parser
-- **Code Formatting**: Prettier (via eslint-plugin-prettier)
-- **Type Checking**: TypeScript strict mode enabled
+- **Package Manager**: pnpm 10.18.3 workspaces
+- **Linting**: ESLint 9 with typescript-eslint 8 and eslint-plugin-prettier
+- **Code Formatting**: Prettier (through eslint-plugin-prettier)
+- **Type Checking**: `tsc`; frontend runs strict mode, API tsconfig tuned for NestJS decorators
 
 ## Project Structure
 
 ```
 yuna/
 ├── apps/
-│   ├── api/          # Backend API (TypeScript)
+│   ├── api/          # Backend API
 │   │   ├── src/
 │   │   └── prisma/   # Database schema and migrations
 │   └── web/          # Frontend React app
