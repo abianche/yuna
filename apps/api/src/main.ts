@@ -1,9 +1,13 @@
 import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
+import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Enable cookie parser
+  app.use(cookieParser());
 
   // Enable CORS for frontend with credentials
   const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173';
