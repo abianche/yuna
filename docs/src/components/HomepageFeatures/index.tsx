@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import styles from './styles.module.css';
 
 type FeatureItem = {
+  id: string;
   title: string;
   Svg: React.ComponentType<React.ComponentProps<'svg'>>;
   description: ReactNode;
@@ -12,6 +13,7 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
+    id: 'customizable-workspaces',
     title: 'Customizable Workspaces',
     Svg: require('@site/static/img/undraw_dev-environment_n5by.svg').default,
     description: (
@@ -22,6 +24,7 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
+    id: 'on-premise-and-self-updating',
     title: 'On-Premise and Self-Updating',
     Svg: require('@site/static/img/undraw_server-status_7viz.svg').default,
     description: (
@@ -32,6 +35,7 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
+    id: 'fast-and-scalable-by-design',
     title: 'Fast and Scalable by Design',
     Svg: require('@site/static/img/undraw_app-benchmarks_ls0m.svg').default,
     description: (
@@ -51,7 +55,7 @@ function Feature({ title, Svg, description, badge }: Readonly<FeatureItem>) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <Svg className={styles.featureSvg} />
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">
@@ -68,8 +72,8 @@ export default function HomepageFeatures(): ReactNode {
     <section className={styles.features}>
       <div className="container">
         <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
+          {FeatureList.map((props) => (
+            <Feature key={props.id} {...props} />
           ))}
         </div>
       </div>
