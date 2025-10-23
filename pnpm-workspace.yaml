@@ -3,4 +3,12 @@ packages:
   - docs
 
 onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@swc/core'
+  - core-js
+  - core-js-pure
+  - esbuild
   - prisma
+  - unrs-resolver
