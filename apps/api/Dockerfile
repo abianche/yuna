@@ -4,15 +4,16 @@ WORKDIR /app
 
 # Install minimal deps for the API (plus root if needed)
 FROM base AS deps
-COPY .npmrc pnpm-workspace.yaml package.json pnpm-lock.yaml prisma.config.ts ./
+COPY .npmrc pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY apps/api/package.json apps/api/package.json
+COPY apps/api/prisma.config.ts apps/api/prisma.config.ts
 COPY apps/api/prisma ./apps/api/prisma
 RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile --filter @yuna/api...
 
-# Generate Prisma Client for the API package (explicit schema)
-# Uses the installed dependencies; no need for a script in apps/api
-RUN pnpm dlx prisma generate --schema apps/api/prisma/schema.prisma
+# Generate Prisma Client for the API package (config lives in apps/api)
+# Use the workspace Prisma CLI so dependencies are already available
+RUN pnpm --filter @yuna/api exec prisma generate
 
 # Build the API
 FROM deps AS build
