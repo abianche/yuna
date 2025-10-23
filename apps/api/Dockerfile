@@ -10,7 +10,7 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 # Copy the package manifest so pnpm can filter correctly
 COPY apps/api/package.json apps/api/package.json
 RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
-  pnpm -w install --frozen-lockfile --filter @yuna/api...
+  pnpm -w install --frozen-lockfile --filter @yuna/api... --ignore-scripts
 
 # Generate Prisma Client
 FROM deps AS prisma
