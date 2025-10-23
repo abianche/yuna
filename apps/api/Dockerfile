@@ -1,34 +1,41 @@
 FROM node:24-alpine AS base
-RUN npm i -g pnpm@10.18.3
+RUN corepack enable && corepack prepare pnpm@10.18.3 --activate
 WORKDIR /app
 
-# Install minimal deps for the API (plus root if needed)
+# Install dependencies for the @yuna/api workspace package
 FROM base AS deps
-COPY .npmrc pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+WORKDIR /app
+# Copy minimal workspace metadata
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+# Copy the package manifest so pnpm can filter correctly
 COPY apps/api/package.json apps/api/package.json
-COPY apps/api/prisma.config.ts apps/api/prisma.config.ts
-COPY apps/api/prisma ./apps/api/prisma
 RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile --filter @yuna/api...
+  pnpm -w install --frozen-lockfile --filter @yuna/api...
 
-# Generate Prisma Client for the API package (config lives in apps/api)
-# Use the workspace Prisma CLI so dependencies are already available
-RUN pnpm --filter @yuna/api exec prisma generate
+# Generate Prisma Client
+FROM deps AS prisma
+WORKDIR /app/apps/api
+COPY apps/api/prisma.config.ts ./prisma.config.ts
+COPY apps/api/prisma ./prisma
+RUN pnpm exec prisma generate
 
-# Build the API
-FROM deps AS build
-COPY tsconfig.json ./tsconfig.json
-COPY apps/api/ ./apps/api/
+# Build the app
+FROM prisma AS build
+WORKDIR /app
+COPY apps/api/ apps/api/
 RUN pnpm -C apps/api build
 
 # Runtime image
-FROM base AS runner
+FROM build AS runner
+WORKDIR /app/apps/api
 ENV NODE_ENV=production
 ENV API_PORT=8080
 
-# Only root node_modules is required (contains @prisma/client and engines)
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=build /app/apps/api/dist ./apps/api/dist
+# Production deps (includes @prisma/client and engines)
+COPY --from=build /app/apps/api/node_modules ./node_modules
+COPY --from=build /app/apps/api/package.json ./package.json
+# Built output
+COPY --from=build /app/apps/api/dist ./dist
 
 EXPOSE 8080
-CMD ["node", "apps/api/dist/main.js"]
+CMD ["node", "dist/main.js"]
