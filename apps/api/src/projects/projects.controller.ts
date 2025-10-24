@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  UseGuards,
+  Req,
+  NotFoundException,
+} from '@nestjs/common';
 import type { Request } from 'express';
 import { ProjectsService } from './projects.service.js';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard.js';
@@ -14,8 +25,12 @@ export class ProjectsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Req() req: Request & { user: { id: string } }) {
-    return this.projectsService.findOne(id, req.user.id);
+  async findOne(@Param('id') id: string, @Req() req: Request & { user: { id: string } }) {
+    const project = await this.projectsService.findOne(id, req.user.id);
+    if (!project) {
+      throw new NotFoundException('Project not found');
+    }
+    return project;
   }
 
   @Post()
@@ -27,16 +42,24 @@ export class ProjectsController {
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() data: { name?: string; description?: string },
     @Req() req: Request & { user: { id: string } },
   ) {
-    return this.projectsService.update(id, data, req.user.id);
+    const project = await this.projectsService.update(id, data, req.user.id);
+    if (!project) {
+      throw new NotFoundException('Project not found');
+    }
+    return project;
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Req() req: Request & { user: { id: string } }) {
-    return this.projectsService.remove(id, req.user.id);
+  async remove(@Param('id') id: string, @Req() req: Request & { user: { id: string } }) {
+    const project = await this.projectsService.remove(id, req.user.id);
+    if (!project) {
+      throw new NotFoundException('Project not found');
+    }
+    return project;
   }
 }

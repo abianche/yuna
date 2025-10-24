@@ -29,15 +29,33 @@ export class ProjectsService {
   }
 
   async update(id: string, data: { name?: string; description?: string }, userId: string) {
-    return this.prisma.project.update({
+    // First verify the project exists and belongs to the user
+    const project = await this.prisma.project.findFirst({
       where: { id, ownerId: userId },
+    });
+
+    if (!project) {
+      return null;
+    }
+
+    return this.prisma.project.update({
+      where: { id },
       data,
     });
   }
 
   async remove(id: string, userId: string) {
-    return this.prisma.project.delete({
+    // First verify the project exists and belongs to the user
+    const project = await this.prisma.project.findFirst({
       where: { id, ownerId: userId },
+    });
+
+    if (!project) {
+      return null;
+    }
+
+    return this.prisma.project.delete({
+      where: { id },
     });
   }
 }

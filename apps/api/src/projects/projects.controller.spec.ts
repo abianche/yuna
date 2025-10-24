@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { NotFoundException } from '@nestjs/common';
 import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
 
@@ -63,6 +64,18 @@ describe('ProjectsController', () => {
       expect(service.findOne).toHaveBeenCalledWith(projectId, userId);
       expect(result).toEqual(project);
     });
+
+    it('should throw NotFoundException when project not found', async () => {
+      const userId = 'user-id';
+      const projectId = 'non-existent';
+
+      mockProjectsService.findOne.mockResolvedValue(null);
+
+      const req = { user: { id: userId } } as { user: { id: string } };
+
+      await expect(controller.findOne(projectId, req)).rejects.toThrow(NotFoundException);
+      expect(service.findOne).toHaveBeenCalledWith(projectId, userId);
+    });
   });
 
   describe('create', () => {
@@ -96,6 +109,21 @@ describe('ProjectsController', () => {
       expect(service.update).toHaveBeenCalledWith(projectId, updateData, userId);
       expect(result).toEqual(updatedProject);
     });
+
+    it('should throw NotFoundException when project not found', async () => {
+      const userId = 'user-id';
+      const projectId = 'non-existent';
+      const updateData = { name: 'Updated Project' };
+
+      mockProjectsService.update.mockResolvedValue(null);
+
+      const req = { user: { id: userId } } as { user: { id: string } };
+
+      await expect(controller.update(projectId, updateData, req)).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(service.update).toHaveBeenCalledWith(projectId, updateData, userId);
+    });
   });
 
   describe('remove', () => {
@@ -111,6 +139,18 @@ describe('ProjectsController', () => {
 
       expect(service.remove).toHaveBeenCalledWith(projectId, userId);
       expect(result).toEqual(deletedProject);
+    });
+
+    it('should throw NotFoundException when project not found', async () => {
+      const userId = 'user-id';
+      const projectId = 'non-existent';
+
+      mockProjectsService.remove.mockResolvedValue(null);
+
+      const req = { user: { id: userId } } as { user: { id: string } };
+
+      await expect(controller.remove(projectId, req)).rejects.toThrow(NotFoundException);
+      expect(service.remove).toHaveBeenCalledWith(projectId, userId);
     });
   });
 });
