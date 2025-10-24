@@ -43,6 +43,8 @@ describe('HealthController', () => {
     });
 
     it('should return status not ready', async () => {
+      Logger.overrideLogger(false);
+
       prismaMock.$queryRaw.mockRejectedValueOnce(new Error('Database connection failed'));
       await expect(healthController.readyz()).rejects.toThrow('Database connection failed');
     });

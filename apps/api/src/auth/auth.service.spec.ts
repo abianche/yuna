@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
-import { ConflictException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Logger, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
 import { PrismaService } from '../prisma/prisma.service';
@@ -22,6 +22,8 @@ describe('AuthService', () => {
   };
 
   beforeEach(async () => {
+    Logger.overrideLogger(false);
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
