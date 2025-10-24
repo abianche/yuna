@@ -18,6 +18,10 @@ on:
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
 
+concurrency:
+  group: api-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   quality:
     name: Test
