@@ -1,5 +1,5 @@
 FROM node:24-alpine AS base
-RUN corepack enable && corepack prepare pnpm@10.18.3 --activate
+RUN corepack enable && corepack prepare pnpm@10.19.0 --activate
 WORKDIR /app
 
 # Install dependencies for the @yuna/api workspace package

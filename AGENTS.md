@@ -29,7 +29,7 @@ Yuna is a self-hosted work management platform built with React and PostgreSQL, 
 - **Schema & Migrations**: Prisma Migrate (workspace-managed)
 
 ### Development Tools
-- **Package Manager**: pnpm 10.18.3 workspaces
+- **Package Manager**: pnpm 10.19.0 workspaces
 - **Linting**: ESLint 9 with typescript-eslint 8 and eslint-plugin-prettier
 - **Code Formatting**: Prettier (through eslint-plugin-prettier)
 - **Type Checking**: `tsc`; frontend runs strict mode, API tsconfig tuned for NestJS decorators
