@@ -7,7 +7,7 @@ This implementation provides a cookie-based JWT authentication system for the Yu
 
 ### 1. Database Schema
 - Added `password` field to the User model in Prisma
-- Created migration: `20251023220739_add_password_to_user`
+- Updated initial migration (`0001_init`) to include password field and other schema improvements
 
 ### 2. Authentication Endpoints
 
@@ -234,7 +234,7 @@ All dependencies checked for vulnerabilities - none found.
 ## Migration Notes
 
 ### Database Migration
-The migration adds a `password` field to the users table. If you have existing users, you'll need to handle password creation separately or reset the database.
+The password field is included in the initial migration (`0001_init`), which creates the users table with all necessary fields including password.
 
 To apply migration:
 ```bash
