@@ -4,7 +4,7 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes';
 export function ThemeProvider({
   children,
   ...props
-}: React.ComponentProps<typeof NextThemesProvider>): React.ReactNode {
+}: Readonly<React.ComponentProps<typeof NextThemesProvider>>): React.ReactNode {
   return (
     <NextThemesProvider attribute="class" enableSystem disableTransitionOnChange {...props}>
       {children}
