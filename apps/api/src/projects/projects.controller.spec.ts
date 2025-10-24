@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { NotFoundException } from '@nestjs/common';
+import { Logger, NotFoundException } from '@nestjs/common';
 import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
+import { Request } from 'express';
 
 describe('ProjectsController', () => {
   let controller: ProjectsController;
@@ -16,6 +17,8 @@ describe('ProjectsController', () => {
   };
 
   beforeEach(async () => {
+    Logger.overrideLogger(false);
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProjectsController],
       providers: [
@@ -42,7 +45,7 @@ describe('ProjectsController', () => {
 
       mockProjectsService.findAll.mockResolvedValue(projects);
 
-      const req = { user: { id: userId } } as { user: { id: string } };
+      const req = { user: { id: userId } } as Request & { user: { id: string } };
       const result = await controller.findAll(req);
 
       expect(service.findAll).toHaveBeenCalledWith(userId);
@@ -58,7 +61,7 @@ describe('ProjectsController', () => {
 
       mockProjectsService.findOne.mockResolvedValue(project);
 
-      const req = { user: { id: userId } } as { user: { id: string } };
+      const req = { user: { id: userId } } as Request & { user: { id: string } };
       const result = await controller.findOne(projectId, req);
 
       expect(service.findOne).toHaveBeenCalledWith(projectId, userId);
@@ -71,7 +74,7 @@ describe('ProjectsController', () => {
 
       mockProjectsService.findOne.mockResolvedValue(null);
 
-      const req = { user: { id: userId } } as { user: { id: string } };
+      const req = { user: { id: userId } } as Request & { user: { id: string } };
 
       await expect(controller.findOne(projectId, req)).rejects.toThrow(NotFoundException);
       expect(service.findOne).toHaveBeenCalledWith(projectId, userId);
@@ -86,7 +89,7 @@ describe('ProjectsController', () => {
 
       mockProjectsService.create.mockResolvedValue(createdProject);
 
-      const req = { user: { id: userId } } as { user: { id: string } };
+      const req = { user: { id: userId } } as Request & { user: { id: string } };
       const result = await controller.create(projectData, req);
 
       expect(service.create).toHaveBeenCalledWith(projectData, userId);
@@ -103,7 +106,7 @@ describe('ProjectsController', () => {
 
       mockProjectsService.update.mockResolvedValue(updatedProject);
 
-      const req = { user: { id: userId } } as { user: { id: string } };
+      const req = { user: { id: userId } } as Request & { user: { id: string } };
       const result = await controller.update(projectId, updateData, req);
 
       expect(service.update).toHaveBeenCalledWith(projectId, updateData, userId);
@@ -117,7 +120,7 @@ describe('ProjectsController', () => {
 
       mockProjectsService.update.mockResolvedValue(null);
 
-      const req = { user: { id: userId } } as { user: { id: string } };
+      const req = { user: { id: userId } } as Request & { user: { id: string } };
 
       await expect(controller.update(projectId, updateData, req)).rejects.toThrow(
         NotFoundException,
@@ -134,7 +137,7 @@ describe('ProjectsController', () => {
 
       mockProjectsService.remove.mockResolvedValue(deletedProject);
 
-      const req = { user: { id: userId } } as { user: { id: string } };
+      const req = { user: { id: userId } } as Request & { user: { id: string } };
       const result = await controller.remove(projectId, req);
 
       expect(service.remove).toHaveBeenCalledWith(projectId, userId);
@@ -147,7 +150,7 @@ describe('ProjectsController', () => {
 
       mockProjectsService.remove.mockResolvedValue(null);
 
-      const req = { user: { id: userId } } as { user: { id: string } };
+      const req = { user: { id: userId } } as Request & { user: { id: string } };
 
       await expect(controller.remove(projectId, req)).rejects.toThrow(NotFoundException);
       expect(service.remove).toHaveBeenCalledWith(projectId, userId);
