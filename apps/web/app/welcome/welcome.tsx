@@ -1,5 +1,5 @@
 import { ModeToggle } from '~/components/mode-toggle';
-import { Button } from '~/components/ui/button';
+import { Button } from '@yuna/ui';
 
 export function Welcome() {
   return (
