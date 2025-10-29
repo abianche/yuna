@@ -14,20 +14,20 @@ import {
   SidebarMenuSubItem,
 } from '@yuna/ui';
 
-export function NavMain({
-  items,
-}: {
-  items: {
+export interface NavMainProps {
+  items: Array<{
     title: string;
     url: string;
     icon?: LucideIcon;
     isActive?: boolean;
-    items?: {
+    items?: Array<{
       title: string;
       url: string;
-    }[];
-  }[];
-}) {
+    }>;
+  }>;
+}
+
+export function NavMain({ items }: Readonly<NavMainProps>) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>

@@ -17,15 +17,15 @@ import {
   useSidebar,
 } from '@yuna/ui';
 
-export function NavProjects({
-  projects,
-}: {
-  projects: {
+export interface NavProjectsProps {
+  projects: Array<{
     name: string;
     url: string;
     icon: LucideIcon;
-  }[];
-}) {
+  }>;
+}
+
+export function NavProjects({ projects }: Readonly<NavProjectsProps>) {
   const { isMobile } = useSidebar();
 
   return (

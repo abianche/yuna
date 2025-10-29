@@ -23,23 +23,23 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } fr
 // This is sample data.
 const data = {
   user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
+    name: 'Alex White',
+    email: 'alex.white@yuna.com',
+    avatar: '/avatars/alex.jpg',
   },
   teams: [
     {
-      name: 'Acme Inc',
+      name: 'Yuna Inc.',
       logo: GalleryVerticalEnd,
       plan: 'Enterprise',
     },
     {
-      name: 'Acme Corp.',
+      name: 'Yuna Corp.',
       logo: AudioWaveform,
       plan: 'Startup',
     },
     {
-      name: 'Evil Corp.',
+      name: 'Yuna Ltd.',
       logo: Command,
       plan: 'Free',
     },
@@ -118,10 +118,6 @@ const data = {
         },
         {
           title: 'Team',
-          url: '#',
-        },
-        {
-          title: 'Billing',
           url: '#',
         },
         {

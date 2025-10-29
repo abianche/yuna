@@ -17,15 +17,15 @@ import {
   useSidebar,
 } from '@yuna/ui';
 
-export function TeamSwitcher({
-  teams,
-}: {
-  teams: {
+export interface TeamSwitcherProps {
+  teams: Array<{
     name: string;
     logo: React.ElementType;
     plan: string;
-  }[];
-}) {
+  }>;
+}
+
+export function TeamSwitcher({ teams }: Readonly<TeamSwitcherProps>) {
   const { isMobile } = useSidebar();
   const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 
