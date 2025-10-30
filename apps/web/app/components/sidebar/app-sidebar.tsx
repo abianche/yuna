@@ -25,7 +25,7 @@ const data = {
   user: {
     name: 'Alex White',
     email: 'alex.white@yuna.com',
-    avatar: '/avatars/alex.jpg',
+    avatar: '/avatars/alex.jpeg',
   },
   teams: [
     {
