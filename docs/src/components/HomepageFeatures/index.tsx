@@ -15,7 +15,7 @@ const FeatureList: FeatureItem[] = [
   {
     id: 'customizable-workspaces',
     title: 'Customizable Workspaces',
-    Svg: require('@site/static/img/undraw_dev-environment_n5by.svg').default,
+    Svg: (await import('@site/static/img/undraw_dev-environment_n5by.svg')).default,
     description: (
       <>
         Define projects, issues, and custom fields that match your team’s workflow. Add new field
@@ -26,7 +26,7 @@ const FeatureList: FeatureItem[] = [
   {
     id: 'on-premise-and-self-updating',
     title: 'On-Premise and Self-Updating',
-    Svg: require('@site/static/img/undraw_server-status_7viz.svg').default,
+    Svg: (await import('@site/static/img/undraw_server-status_7viz.svg')).default,
     description: (
       <>
         Run entirely on your own infrastructure with a built-in updater that downloads signed
@@ -37,11 +37,11 @@ const FeatureList: FeatureItem[] = [
   {
     id: 'fast-and-scalable-by-design',
     title: 'Fast and Scalable by Design',
-    Svg: require('@site/static/img/undraw_app-benchmarks_ls0m.svg').default,
+    Svg: (await import('@site/static/img/undraw_app-benchmarks_ls0m.svg')).default,
     description: (
       <>
-        Optimized for large datasets using keyset pagination, indexed JSONB fields, and virtualized
-        tables for smooth interaction even with thousands of items.
+        Designed to handle heavy workloads with server-side aggregation, efficient indexing, and
+        client-side virtualization so the UI stays snappy even at scale.
       </>
     ),
   },
