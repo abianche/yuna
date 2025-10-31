@@ -3,6 +3,10 @@ import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import styles from './styles.module.css';
 
+import devEnvironmentSvg from '@site/static/img/undraw_dev-environment_n5by.svg';
+import serverStatusSvg from '@site/static/img/undraw_server-status_7viz.svg';
+import appBenchmarksSvg from '@site/static/img/undraw_app-benchmarks_ls0m.svg';
+
 type FeatureItem = {
   id: string;
   title: string;
@@ -15,7 +19,7 @@ const FeatureList: FeatureItem[] = [
   {
     id: 'customizable-workspaces',
     title: 'Customizable Workspaces',
-    Svg: (await import('@site/static/img/undraw_dev-environment_n5by.svg')).default,
+    Svg: devEnvironmentSvg,
     description: (
       <>
         Define projects, issues, and custom fields that match your team’s workflow. Add new field
@@ -26,7 +30,7 @@ const FeatureList: FeatureItem[] = [
   {
     id: 'on-premise-and-self-updating',
     title: 'On-Premise and Self-Updating',
-    Svg: (await import('@site/static/img/undraw_server-status_7viz.svg')).default,
+    Svg: serverStatusSvg,
     description: (
       <>
         Run entirely on your own infrastructure with a built-in updater that downloads signed
@@ -37,7 +41,7 @@ const FeatureList: FeatureItem[] = [
   {
     id: 'fast-and-scalable-by-design',
     title: 'Fast and Scalable by Design',
-    Svg: (await import('@site/static/img/undraw_app-benchmarks_ls0m.svg')).default,
+    Svg: appBenchmarksSvg,
     description: (
       <>
         Designed to handle heavy workloads with server-side aggregation, efficient indexing, and
