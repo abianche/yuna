@@ -1,0 +1,11 @@
+{
+  "sonarlint.connectedMode.project": {
+    "connectionId": "abianche",
+    "projectKey": "abianche_yuna"
+  },
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": [
+    { "directory": "web", "changeProcessCWD": true },
+    { "directory": "ui", "changeProcessCWD": true }
+  ]
+}
