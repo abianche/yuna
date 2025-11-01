@@ -22,12 +22,18 @@ concurrency:
   group: ui-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  WORKING_DIR: frontend
+
 jobs:
   quality:
     name: Lint & Build
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIR }}
 
     steps:
       - name: Checkout
