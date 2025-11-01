@@ -1,0 +1,22 @@
+{
+  "name": "@yuna/workspace",
+  "private": true,
+  "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd",
+  "scripts": {
+    "clean": "pnpm -r exec rimraf dist build .react-router",
+    "lint": "pnpm -r exec eslint .",
+    "typecheck": "pnpm -r exec tsc -b",
+    "build": "pnpm -r run build",
+    "dev:web": "pnpm --filter @yuna/web run dev",
+    "build:web": "pnpm --filter @yuna/web run build",
+    "build:ui": "pnpm --filter @yuna/ui run build",
+    "docker:up": "docker compose up -d",
+    "docker:build": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:ps": "docker compose ps",
+    "docker:logs": "docker compose logs --no-color --tail=200",
+    "docker:logs:api": "docker compose logs --no-color --tail=200 api",
+    "docker:restart": "docker compose restart",
+    "docker:nuke": "docker compose down -v --remove-orphans"
+  }
+}
