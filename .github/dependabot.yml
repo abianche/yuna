@@ -5,18 +5,18 @@
 
 version: 2
 updates:
-  - package-ecosystem: 'npm' # See documentation for possible values
-    directory: '/' # Location of package manifests
+  - package-ecosystem: "npm"
+    directories: ["/frontend", "/frontend/ui", "/frontend/web"]
     schedule:
-      interval: 'weekly'
+      interval: "weekly"
 
     open-pull-requests-limit: 1
 
     groups:
       all-dependencies:
         patterns:
-          - '*'
+          - "*"
         update-types:
-          - 'major'
-          - 'minor'
-          - 'patch'
+          - "major"
+          - "minor"
+          - "patch"
