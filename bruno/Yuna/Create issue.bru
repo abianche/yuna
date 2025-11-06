@@ -1,0 +1,28 @@
+meta {
+  name: Create issue
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/api/issues
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "key": "YUNA-1",
+    "title": "First issue",
+    "description": "Hello!"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

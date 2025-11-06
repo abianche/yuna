@@ -1,0 +1,15 @@
+meta {
+  name: Get issues
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/api/issues
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
