@@ -7,5 +7,15 @@
   "eslint.workingDirectories": [
     { "directory": "web", "changeProcessCWD": true },
     { "directory": "ui", "changeProcessCWD": true }
+  ],
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "microprofile.tools.validation.unknown.excluded": [
+    "*/mp-rest/providers/*/priority",
+    "mp.openapi.schema.*",
+    "kafka-streams.*",
+    "camel.*",
+    "quarkus.flyway.*",
+    "quarkus.datasource.*",
+    "quarkus.hibernate-orm.*"
   ]
 }
